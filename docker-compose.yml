@@ -1,0 +1,20 @@
+# Serviços (containers) da aplicação.
+services:
+  # Serviço da API.
+  api:
+    # Constrói a imagem a partir do Dockerfile no diretório atual.
+    build: .
+    # Nome do container para fácil identificação.
+    container_name: payment_api
+    # Carrega variáveis de ambiente de um arquivo .env.
+    env_file:
+      - .env
+    # Comando para iniciar o servidor com live reload, ideal para desenvolvimento.
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    # Mapeia a porta 8000 do host para a porta 8000 do container.
+    ports:
+      - "8000:8000"
+    # Monta o diretório atual no diretório /app do container.
+    # Isso permite que as alterações no código sejam refletidas instantaneamente (live reload).
+    volumes:
+      - .:/app
